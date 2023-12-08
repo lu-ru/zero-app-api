@@ -7,7 +7,7 @@ const lastItems = async (req, res) => {
             if (err) {
                 return res.status(500).json({'message' :  err.message})
             }
-            const result_parsed= JSON.parse(JSON.stringify(result));
+            const result_parsed= result.rows;
             res.send(result_parsed);  
         })
     } catch (err) {

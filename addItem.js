@@ -9,7 +9,7 @@ const addItem = async  (req, res) => {
 
 
     try {
-        const sqlInsert = "INSERT INTO products (itemName, itemPrice, itemDescription, itemCategory, seller_id, inserted_date) VALUES (?, ?, ?, ?, ?, ?);";
+        const sqlInsert = "INSERT INTO products (itemName, itemPrice, itemDescription, itemCategory, seller_id, inserted_date) VALUES ($1, $2, $3, $4, $5, $6);";
         db.query(sqlInsert, [itemName, itemPrice, itemDescription, itemCategory, id, today], (err, result) => {
             if (err) {
                 console.log(err.sqlMessage)

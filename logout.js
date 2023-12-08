@@ -9,7 +9,7 @@ const handleLogout = async (req, res) => {
     console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
     try {
-        const sqlSelect = "SELECT * FROM users WHERE refresh_token=?;";
+        const sqlSelect = "SELECT * FROM users WHERE refresh_token=$1;";
         db.query(sqlSelect, [refreshToken], async (err, result) => {
             if (err) {
                 return res.status(500).json({'message' :  err.message})
@@ -21,7 +21,7 @@ const handleLogout = async (req, res) => {
                 return res.status(403)
             }
 
-            const sqlUpdate = 'UPDATE users SET refresh_token = NULL WHERE username=?;';
+            const sqlUpdate = 'UPDATE users SET refresh_token = NULL WHERE username=$1;';
             db.query(sqlUpdate, foundUser.username, (err, result) => {
                 if (err) return res.status(500).json({'message': err.message});
             })

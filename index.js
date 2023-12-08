@@ -14,7 +14,7 @@ const profileItems = require('./profileItems');
 const lastItems = require('./lastItems')
 
 
-const whitelist = ['https://zero-app-front.onrender.com']
+const whitelist = ['http://localhost:3000']
 const corsOption = {
     origin: (origin, callback) => {
         if (whitelist.indexOf(origin) !== -1) {

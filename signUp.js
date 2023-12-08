@@ -8,10 +8,13 @@ const signUp = async  (req, res) => {
     const hashedPwd = await bcrypt.hash(pwd, 10);
 
     try {
-        const sqlInsert = "INSERT INTO users (username, password) VALUES (?, ?);";
+        const sqlInsert = "INSERT INTO users (username, password) VALUES ($1, $2);";
         db.query(sqlInsert, [user, hashedPwd], (err, result) => {
             if (err?.code==='ER_DUP_ENTRY') {
                 return res.sendStatus(409);
+            } else if (err?.code) {
+                console.log(err)
+                return res.sendStatus(401);
             }
             return res.status(201).json({'message' : 'New User Created'})
         })

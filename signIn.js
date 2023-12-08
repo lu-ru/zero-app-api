@@ -7,12 +7,12 @@ const signIn = async (req, res) => {
     if (!user || !pwd ) return res.sendStatus(400).json({'message' : 'Username and Password are required'});
 
     try {
-        const sqlSelect = "SELECT * FROM users WHERE username=?;";
+        const sqlSelect = "SELECT * FROM users WHERE username=$1;";
         db.query(sqlSelect, [user], async (err, result) => {
             if (err) {
                 return res.status(500).json({'message' :  err.message})
             }
-            const foundUser = JSON.parse(JSON.stringify(result))[0];
+            const foundUser = result.rows[0];
             if (!foundUser) {
                 return res.status(404).json()
             }
@@ -29,7 +29,7 @@ const signIn = async (req, res) => {
                     process.env.REFRESH_TOKEN_SECRET,
                     { expiresIn : '1d' }
                 )
-                const sqlUpdate='UPDATE users SET refresh_token = ? WHERE username= ?;';
+                const sqlUpdate='UPDATE users SET refresh_token = $1 WHERE username= $2;';
                 db.query(sqlUpdate, [refreshToken, user], (err, result)=>{
                     if (err) {
                         return res.status(500).json({'message' :  err.message})
