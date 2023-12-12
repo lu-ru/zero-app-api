@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require('../db');
 
 
 const editProfile = async  (req, res) => {
@@ -7,8 +7,8 @@ const editProfile = async  (req, res) => {
     try {
         const sqlUpdate = "UPDATE users SET address = $1 WHERE username = $2;";
         db.query(sqlUpdate, [address, user], (err, result) => {
-            if (err?.code) {
-                return res.sendStatus(400);
+            if (err) {
+                return res.sendStatus(400).json({'message ' : err.sqlMessage});
             }
             return res.status(201).json({'message' : 'Profile updated'})
         })

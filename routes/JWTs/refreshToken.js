@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require('../../db');
 const jwt = require('jsonwebtoken');
 
 const handleRefreshToken = (req, res) => {
@@ -24,7 +24,7 @@ const handleRefreshToken = (req, res) => {
                         process.env.ACCESS_TOKEN_SECRET,
                         {expiresIn: '30s'}
                     );
-                    res.json({accessToken})
+                    res.json({id: foundUser.id, user: foundUser.username, accessToken})
                 })
         })
     } catch (err) {

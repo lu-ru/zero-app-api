@@ -2,19 +2,19 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 require('dotenv').config();
-const signUp = require('./signUp');
-const signIn = require('./signIn');
-const verifyJWT = require('./verifyJWT');
-const handleRefreshToken = require('./refreshToken');
-const handleLogout = require('./logout');
+const signUp = require('./routes/JWTs/signUp');
+const signIn = require('./routes/JWTs/signIn');
+const verifyJWT = require('./routes/JWTs/verifyJWT');
+const handleRefreshToken = require('./routes/JWTs/refreshToken');
+const handleLogout = require('./routes/JWTs/logout');
 const cookieParser = require('cookie-parser');
-const editProfile = require('./editProfile');
-const addItem = require('./addItem');
-const profileItems = require('./profileItems');
-const lastItems = require('./lastItems')
+const editProfile = require('./routes/editProfile');
+const addItem = require('./routes/addItem');
+const profileItems = require('./routes/profileItems');
+const lastItems = require('./routes/lastItems')
 
 
-const whitelist = ['https://zero-app-front.onrender.com']
+const whitelist = ['http://localhost:3000']
 const corsOption = {
     origin: (origin, callback) => {
         if (whitelist.indexOf(origin) !== -1) {
@@ -29,7 +29,7 @@ const corsOption = {
 }
 
 //Middleware
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 app.use(cors(corsOption));
 app.use(cookieParser())
 

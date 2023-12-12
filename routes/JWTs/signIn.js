@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require('../../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -27,7 +27,7 @@ const signIn = async (req, res) => {
                 const refreshToken = jwt.sign(
                     { 'username': foundUser.username },
                     process.env.REFRESH_TOKEN_SECRET,
-                    { expiresIn : '1d' }
+                    { expiresIn : '300s' }
                 )
                 const sqlUpdate='UPDATE users SET refresh_token = $1 WHERE username= $2;';
                 db.query(sqlUpdate, [refreshToken, user], (err, result)=>{
