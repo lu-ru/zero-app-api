@@ -11,7 +11,11 @@ const cookieParser = require('cookie-parser');
 const editProfile = require('./routes/editProfile');
 const addItem = require('./routes/addItem');
 const profileItems = require('./routes/profileItems');
-const lastItems = require('./routes/lastItems')
+const lastItems = require('./routes/lastItems');
+const getItem = require('./routes/getItem');
+const deleteItem = require('./routes/deleteItem');
+const searchCategory = require('./routes/searchCategory');
+const searchSearchBar = require('./routes/searchbar');
 
 
 const whitelist = ['http://localhost:3000']
@@ -39,13 +43,17 @@ app.post('/register', signUp);
 app.post('/login', signIn);
 app.get('/refresh', handleRefreshToken);
 app.get('/logout', handleLogout);
-app.get('/last_items', lastItems)
+app.get('/last_items', lastItems);
+app.get('/getItem/:id', getItem);
+app.get('/search/:category', searchCategory);
+app.get('/searchbar/:category/:query', searchSearchBar)
 
 //Verify JWT
 app.use(verifyJWT);
 app.post('/edit-profile', editProfile);
 app.post('/add-item', addItem);
-app.get('/:id/profile-items', profileItems)
+app.get('/:id/profile-items', profileItems);
+app.post('/delete/:id', deleteItem);
 
 
 app.listen(3001, ()=> console.log('Running on 3001'))
