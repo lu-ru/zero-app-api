@@ -16,6 +16,8 @@ const getItem = require('./routes/getItem');
 const deleteItem = require('./routes/deleteItem');
 const searchCategory = require('./routes/searchCategory');
 const searchSearchBar = require('./routes/searchbar');
+const createOrder = require('./routes/PayPal/create_order');
+const completeOrder = require('./routes/PayPal/complete_order');
 
 
 const whitelist = ['http://localhost:3000']
@@ -25,7 +27,7 @@ const corsOption = {
             callback(null, true)
         } else {
             console.log(whitelist.indexOf(origin))
-            callback(new Error ('Not Allowed by CORS'));
+            callback(new Error('Not Allowed by CORS'));
         }
     },
     credentials: true,
@@ -33,7 +35,7 @@ const corsOption = {
 }
 
 //Middleware
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({ limit: '50mb' }));
 app.use(cors(corsOption));
 app.use(cookieParser())
 
@@ -47,6 +49,8 @@ app.get('/last_items', lastItems);
 app.get('/getItem/:id', getItem);
 app.get('/search/:category', searchCategory);
 app.get('/searchbar/:category/:query', searchSearchBar)
+app.post('/create_order', createOrder);
+app.post('/complete_order', completeOrder);
 
 //Verify JWT
 app.use(verifyJWT);
@@ -56,4 +60,4 @@ app.get('/:id/profile-items', profileItems);
 app.post('/delete/:id', deleteItem);
 
 
-app.listen(3001, ()=> console.log('Running on 3001'))
+app.listen(3001, () => console.log('Running on 3001'))
